@@ -1,4 +1,4 @@
-vector-role
+vector-role 
 =========
 
 Install vector role
