@@ -1,0 +1,23 @@
+---
+# vars file for vector-role
+set_fact: full_message="{{ clickhouse-01 }} {{ message2 }}
+nginx_user_name: root
+vector_config:
+  sources:
+      our_log:
+        ignore_older_secs: 600
+        include:
+          - /var/log/nginx/access.log
+        read_from: beginning
+        type: file
+  sinks:
+    to_clickhouse:
+      type: clickhouse
+      inputs:
+        - our_log
+      database: logs
+      endpoint: http://{{ hostvars['clickhouse-01'].ansible_host }}:8123
+      table: access_logs
+      compression: gzip
+      healthcheck: false
+      skip_unknown_fields: true

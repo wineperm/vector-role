@@ -1,0 +1,56 @@
+---
+# tasks file for vector-role
+- name: nginx install repository
+  become: true
+  ansible.builtin.yum:
+    name: epel-release
+    state: present
+  tags: nginx install repository
+- name: nginx install
+  become: true
+  ansible.builtin.yum:
+    name: nginx
+    state: present
+  notify: start nginx
+  tags: nginx install
+- name: nginx create config
+  become: true
+  ansible.builtin.template:
+    src: templates/config_nginx.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: reload nginx
+  tags: config_nginx.j2
+
+- name: vector install
+  become: true
+  ansible.builtin.yum:
+    name: "{{ vector_url }}"
+    state: present
+  tags: vector_install
+- name: vector template config
+  become: true
+  ansible.builtin.template:
+    src: templates/vector.yml.j2 
+    dest: /etc/vector/vector.yml
+    mode: "0644"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+    validate: vector validate --no-environment --config-yaml %s
+  tags: vector.yml.j2
+- name: vector create systemd
+  become: true
+  ansible.builtin.template:
+    src: templates/config_vector.j2
+    dest: /etc/systemd/system/vector.service
+    mode: "0644"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+  tags: config_vector.j2
+- name: vector start service
+  become: true
+  ansible.builtin.systemd:
+    name: vector
+    state: started
+    daemon_reload: true
+  tags: vector_systemd
