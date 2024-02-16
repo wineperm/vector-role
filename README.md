@@ -11,8 +11,9 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-vector_url: https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm
-vector_version: 0.21.1
+- vector_url: https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm
+
+- vector_version: 0.21.1
 
 <!-- Dependencies
 ------------
@@ -24,7 +25,7 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: vector-01
       roles:
          - { role: vector-role }
 
@@ -36,4 +37,4 @@ MIT
 Author Information
 ------------------
 
-Krasil'nikov Leonid Stanislavovich
+Krasil'nikov Leonid (wineperm)
