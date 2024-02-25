@@ -13,7 +13,7 @@ Role Variables
 
 - vector_url: https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm
 
-- vector_version: 0.21.1
+- vector_version: 0.36.0
 
 <!-- Dependencies
 ------------

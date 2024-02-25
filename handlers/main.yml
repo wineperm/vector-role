@@ -1,9 +1,22 @@
 ---
-# handlers file for vector-role
-- name: start nginx
+- name: Create Vector systemd unit
   become: true
-  ansible.builtin.command: nginx
-- name: reload nginx
+  become_method: su
+  ansible.builtin.template:
+    src: "templates/config_vector.j2"
+    dest: "/etc/systemd/system/vector.service"
+    mode: "0644"
+
+- name: Start Vector service
   become: true
-  ansible.builtin.command: nginx -s reload
-      
+  ansible.builtin.service:
+    name: vector
+    state: started
+  when: ansible_facts.virtualization_type != "docker"
+
+- name: Restart Vector service
+  become: true
+  ansible.builtin.service:
+    name: vector
+    state: restarted
+  when: ansible_facts.virtualization_type != "docker"
