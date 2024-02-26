@@ -11,7 +11,7 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-- vector_url: https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm
+- vector_conf_dir: "/etc/vector/"
 
 - vector_version: 0.36.0
 
