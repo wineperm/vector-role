@@ -3,9 +3,9 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint: |
-  ansible-lint .
-  yamllint .
+# lint: |
+#   ansible-lint .
+#   yamllint .
 platforms:
   - name: debian
     image: docker.io/pycontribs/debian:latest
@@ -26,4 +26,3 @@ provisioner:
   name: ansible
 verifier:
   name: ansible
-
